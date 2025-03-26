@@ -376,29 +376,50 @@ export default function PomodoroTimer() {
             <Progress value={progress} className="w-full h-2" />
 
             {/* Controls */}
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button onClick={toggleTimer} variant="default" size="lg" className="w-24">
-                {isRunning ? <Pause className="mr-2" size={18} /> : <Play className="mr-2" size={18} />}
-                {isRunning ? "Pause" : "Start"}
-              </Button>
+            {mode === "work" ? (
+              // Work mode controls - row layout with settings below
+              <div className="flex flex-col items-center space-y-4">
+                <div className="flex space-x-4">
+                  <Button onClick={toggleTimer} variant="default" size="lg" className="w-24">
+                    {isRunning ? <Pause className="mr-2" size={18} /> : <Play className="mr-2" size={18} />}
+                    {isRunning ? "Pause" : "Start"}
+                  </Button>
 
-              <Button onClick={resetTimer} variant="outline" size="lg">
-                <RotateCcw className="mr-2" size={18} />
-                Reset
-              </Button>
+                  <Button onClick={resetTimer} variant="outline" size="lg">
+                    <RotateCcw className="mr-2" size={18} />
+                    Reset
+                  </Button>
+                </div>
 
-              <Button onClick={() => setSettingsOpen(true)} variant="ghost" size="lg">
-                <Settings className="mr-2" size={18} />
-                Settings
-              </Button>
+                <Button onClick={() => setSettingsOpen(true)} variant="ghost" size="lg">
+                  <Settings className="mr-2" size={18} />
+                  Settings
+                </Button>
+              </div>
+            ) : (
+              // Break mode controls - grid layout
+              <div className="grid grid-cols-2 gap-4 w-full max-w-xs">
+                <Button onClick={toggleTimer} variant="default" size="lg">
+                  {isRunning ? <Pause className="mr-2" size={18} /> : <Play className="mr-2" size={18} />}
+                  {isRunning ? "Pause" : "Start"}
+                </Button>
 
-              {mode === "break" && (
+                <Button onClick={resetTimer} variant="outline" size="lg">
+                  <RotateCcw className="mr-2" size={18} />
+                  Reset
+                </Button>
+
                 <Button onClick={skipBreak} variant="secondary" size="lg">
                   <SkipForward className="mr-2" size={18} />
                   Skip
                 </Button>
-              )}
-            </div>
+
+                <Button onClick={() => setSettingsOpen(true)} variant="ghost" size="lg">
+                  <Settings className="mr-2" size={18} />
+                  Settings
+                </Button>
+              </div>
+            )}
           </div>
         </CardContent>
 
